@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gokul Krishna R — SOC Analyst / Cybersecurity Professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F14;
+    --panel:#121A22;
+    --panel-alt:#0F161D;
+    --border:#22323F;
+    --text:#DCE4EA;
+    --text-dim:#7E8FA0;
+    --accent:#E8A33D;
+    --accent-dim:#8A6526;
+    --ok:#45C4B0;
+    --crit:#D9534F;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(232,163,61,0.06), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(69,196,176,0.05), transparent 60%),
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+  }
+  a{color:var(--ok); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  /* Status bar */
+  .statusbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:1rem; padding:0.6rem 1.5rem;
+    background:rgba(11,15,20,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--text-dim);
+    flex-wrap:wrap;
+  }
+  .statusbar .left{display:flex; align-items:center; gap:0.6rem;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok); flex:none;}
+  .statusbar nav{display:flex; gap:1.2rem;}
+  .statusbar nav a{color:var(--text-dim); letter-spacing:0.03em;}
+  .statusbar nav a:hover{color:var(--accent); text-decoration:none;}
+  #clock{color:var(--text-dim); min-width:70px;}
+
+  section{padding:5rem 1.5rem; max-width:920px; margin:0 auto;}
+  .eyebrow{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.5rem;
+  }
+  .eyebrow::before{content:'//'; color:var(--text-dim);}
+  h2{font-family:var(--mono); font-size:1.5rem; font-weight:600; color:var(--text); margin-bottom:2rem; letter-spacing:-0.01em;}
+
+  /* Hero */
+  .hero{padding-top:4rem; padding-bottom:4rem;}
+  .terminal{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+    overflow:hidden;
+  }
+  .term-head{
+    display:flex; align-items:center; gap:0.5rem; padding:0.7rem 1rem;
+    background:var(--panel-alt); border-bottom:1px solid var(--border);
+    font-family:var(--mono); font-size:0.7rem; color:var(--text-dim);
+  }
+  .term-head .tf{width:9px;height:9px;border-radius:50%;background:#3a4a58;}
+  .term-body{padding:1.6rem 1.6rem 1.8rem; font-family:var(--mono); font-size:0.95rem;}
+  .term-body .line{margin-bottom:0.5rem; white-space:pre-wrap; word-break:break-word;}
+  .term-body .prompt{color:var(--ok);}
+  .term-body .prompt::before{content:'$ '; color:var(--text-dim);}
+  .term-body .out{color:var(--text); padding-left:0; opacity:0; animation:reveal 0.4s forwards;}
+  .term-body .out.name{font-size:1.7rem; font-weight:700; color:var(--accent); font-family:var(--sans); letter-spacing:-0.01em;}
+  @keyframes reveal{to{opacity:1;}}
+  .cursor{display:inline-block; width:8px; height:1.1em; background:var(--accent); vertical-align:text-bottom; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero-ctas{display:flex; gap:0.8rem; margin-top:1.6rem; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:0.8rem; padding:0.7rem 1.2rem; border-radius:5px;
+    border:1px solid var(--border); color:var(--text); background:var(--panel-alt);
+    cursor:pointer; letter-spacing:0.02em; transition:border-color 0.15s, color 0.15s;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent); text-decoration:none;}
+  .btn.primary{background:var(--accent); color:#1a1206; border-color:var(--accent); font-weight:600;}
+  .btn.primary:hover{background:#f0af4d; color:#1a1206;}
+
+  /* Panels */
+  .panel{
+    background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:1.6rem 1.8rem;
+  }
+  .summary-text{color:var(--text-dim); font-size:1rem; max-width:70ch;}
+
+  /* Timeline (experience/education) */
+  .log{border-left:2px solid var(--border); padding-left:1.4rem; margin-left:0.4rem;}
+  .log-entry{position:relative; padding-bottom:1.8rem;}
+  .log-entry:last-child{padding-bottom:0;}
+  .log-entry::before{
+    content:''; position:absolute; left:-1.53rem; top:0.35rem; width:9px; height:9px;
+    border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px rgba(69,196,176,0.15);
+  }
+  .log-ts{font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.04em; text-transform:uppercase;}
+  .log-title{font-weight:600; font-size:1.05rem; margin:0.25rem 0 0.5rem;}
+  .log-org{color:var(--text-dim); font-size:0.9rem; margin-bottom:0.5rem;}
+  .log ul{margin-left:1.1rem; color:var(--text-dim); font-size:0.92rem;}
+  .log ul li{margin-bottom:0.35rem;}
+
+  /* Skills */
+  .skill-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:1rem;}
+  .skill-card h3{
+    font-family:var(--mono); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--ok); margin-bottom:0.9rem;
+  }
+  .tags{display:flex; flex-wrap:wrap; gap:0.5rem;}
+  .tag{
+    font-family:var(--mono); font-size:0.76rem; padding:0.35rem 0.65rem; border-radius:4px;
+    background:var(--panel-alt); border:1px solid var(--border); color:var(--text);
+  }
+
+  /* Projects / case files */
+  .case-grid{display:flex; flex-direction:column; gap:1.2rem;}
+  .case{
+    background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:1.6rem 1.8rem;
+    transition:border-color 0.15s;
+  }
+  .case:hover{border-color:var(--accent-dim);}
+  .case-head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.6rem;}
+  .case-id{font-family:var(--mono); font-size:0.72rem; color:var(--accent); letter-spacing:0.06em;}
+  .case-status{font-family:var(--mono); font-size:0.68rem; color:var(--ok); border:1px solid var(--ok); border-radius:3px; padding:0.15rem 0.5rem;}
+  .case h3{font-size:1.15rem; margin-bottom:0.7rem;}
+  .case ul{margin-left:1.1rem; color:var(--text-dim); font-size:0.92rem; margin-bottom:0.9rem;}
+  .case ul li{margin-bottom:0.35rem;}
+  .case .tags{margin-bottom:0.7rem;}
+
+  /* Achievements */
+  .ach-list{list-style:none;}
+  .ach-list li{
+    display:flex; gap:0.7rem; padding:0.7rem 0; border-bottom:1px dashed var(--border); font-size:0.94rem; color:var(--text-dim);
+  }
+  .ach-list li:last-child{border-bottom:none;}
+  .ach-list li::before{content:'✓'; color:var(--ok); font-family:var(--mono); flex:none;}
+
+  /* Contact */
+  .contact-panel{text-align:center;}
+  .contact-links{display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1.4rem;}
+
+  footer{
+    text-align:center; padding:2.5rem 1.5rem; font-family:var(--mono); font-size:0.72rem; color:var(--text-dim);
+    border-top:1px solid var(--border);
+  }
+
+  @media (max-width:640px){
+    section{padding:3.5rem 1.2rem;}
+    .term-body{font-size:0.85rem;}
+    .out.name{font-size:1.3rem !important;}
+    .statusbar nav{gap:0.8rem;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .out{opacity:1 !important; animation:none !important;}
+    .cursor{animation:none;}
+  }
+
+  /* Scroll to top */
+  .scrolltop{
+    position:fixed; right:1.5rem; bottom:1.5rem; z-index:60;
+    width:42px; height:42px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--panel-alt); border:1px solid var(--border); color:var(--text-dim);
+    cursor:pointer; box-shadow:0 8px 24px -8px rgba(0,0,0,0.6);
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity 0.2s, transform 0.2s, border-color 0.15s, color 0.15s, visibility 0.2s;
+  }
+  .scrolltop.show{opacity:1; visibility:visible; transform:translateY(0);}
+  .scrolltop:hover{border-color:var(--accent); color:var(--accent);}
+  .scrolltop svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+  @media (max-width:640px){
+    .scrolltop{right:1rem; bottom:1rem; width:38px; height:38px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scrolltop{transition:opacity 0.2s;}
+  }
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="left"><span class="dot"></span> STATUS: ONLINE &nbsp;|&nbsp; THREATS DETECTED: 0</div>
+  <nav>
+    <a href="#about">about</a>
+    <a href="#experience">experience</a>
+    <a href="#projects">projects</a>
+    <a href="#skills">skills</a>
+    <a href="#contact">contact</a>
+  </nav>
+  <div id="clock">--:--:--</div>
+</div>
+
+<section class="hero">
+  <div class="terminal">
+    <div class="term-head"><span class="tf"></span><span class="tf"></span><span class="tf"></span>&nbsp;&nbsp;analyst@soc:~</div>
+    <div class="term-body" id="termBody"></div>
+  </div>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn primary">View case files</a>
+    <a href="#contact" class="btn">Contact</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">profile summary</div>
+  <h2>About</h2>
+  <div class="panel">
+    <p class="summary-text">
+      Entry-level SOC Analyst with hands-on experience across vulnerability assessment, reconnaissance,
+      web application testing, and lab-based security monitoring. Comfortable in Linux environments
+      (Kali, Ubuntu) with tools like Nmap, Burp Suite, Metasploit, Hydra, John the Ripper, and Wazuh.
+      Grounded in networking fundamentals, authentication attacks, and SIEM monitoring — with practical
+      exposure gained through CTF challenges and a self-built home lab. Background in psychology adds
+      an analytical, detail-oriented lens to incident triage and threat analysis.
+    </p>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="eyebrow">activity log</div>
+  <h2>Experience &amp; Education</h2>
+  <div class="log">
+    <div class="log-entry">
+      <div class="log-ts">Jun 2026 — Jul 2026</div>
+      <div class="log-title">Cyber Security Intern</div>
+      <div class="log-org">CodeAlpha · Remote, India</div>
+      <ul>
+        <li>Completed the Secure Coding Review task — audited a vulnerable Python backend and shipped a refactored, secure version (fixed hardcoded credentials, SQL injection, and information disclosure).</li>
+        <li>Delivered a Phishing Awareness Training presentation covering the phishing attack lifecycle, detection, and prevention.</li>
+        <li>Validated fixes using Bandit (Python static application security testing).</li>
+      </ul>
+    </div>
+    <div class="log-entry">
+      <div class="log-ts">May 2026 — Present</div>
+      <div class="log-title">Remote Cybersecurity Intern</div>
+      <div class="log-org">Codec Technologies India</div>
+      <ul>
+        <li>Working remotely on cybersecurity operations and practical security assessment tasks.</li>
+        <li>Hands-on exposure to vulnerability analysis, reconnaissance, and security monitoring concepts.</li>
+        <li>Working with cybersecurity tools and Linux-based environments for security-related activities.</li>
+        <li>Building practical knowledge in SOC operations, incident analysis, and defensive security practices.</li>
+      </ul>
+    </div>
+    <div class="log-entry">
+      <div class="log-ts">Jul 2025 — Apr 2026</div>
+      <div class="log-title">Cyber Security Training</div>
+      <div class="log-org">Offenso Hackers Academy</div>
+      <ul>
+        <li>Completed the Pre Security learning path on TryHackMe.</li>
+        <li>Attended "Think Like A Hacker" and "Steganography vs Cryptography" webinars.</li>
+      </ul>
+    </div>
+    <div class="log-entry">
+      <div class="log-ts">Aug 2019 — May 2022</div>
+      <div class="log-title">B.Sc. Psychology (Coursework Completed)</div>
+      <div class="log-org">M G University, Kottayam</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="eyebrow">case files</div>
+  <h2>Projects</h2>
+  <div class="case-grid">
+    <div class="case">
+      <div class="case-head">
+        <span class="case-id">CASE-001 · WAZUH SIEM HOME LAB</span>
+        <span class="case-status">RESOLVED</span>
+      </div>
+      <h3>Personal SIEM &amp; Log Monitoring Lab</h3>
+      <div class="tags">
+        <span class="tag">Wazuh</span><span class="tag">Linux VMs</span><span class="tag">Log Analysis</span><span class="tag">SOC Workflows</span>
+      </div>
+      <ul>
+        <li>Built and configured a personal cybersecurity home lab using Wazuh SIEM for security monitoring and log analysis.</li>
+        <li>Configured Linux-based virtual machines and integrated security monitoring components in a controlled environment.</li>
+        <li>Explored log collection, threat detection, system monitoring, and alert analysis concepts.</li>
+        <li>Practiced defensive security techniques and SOC-related workflows using Wazuh dashboards.</li>
+      </ul>
+      <a href="#" target="_blank" rel="noopener">→ View write-up on LinkedIn</a>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-id">CASE-002 · SECURE PASSWORD GENERATOR</span>
+        <span class="case-status">RESOLVED</span>
+      </div>
+      <h3>Password Generator Web Application</h3>
+      <div class="tags">
+        <span class="tag">HTML5</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Secure Coding</span>
+      </div>
+      <ul>
+        <li>Developed a secure password generator web app with customizable length and character policies.</li>
+        <li>Applied secure coding practices and client-side input validation to strengthen generated passwords.</li>
+        <li>Focused on resistance to common brute-force and dictionary attacks.</li>
+        <li>Delivered a responsive, user-friendly interface.</li>
+      </ul>
+      <a href="https://github.com/gokulkrishnar16/PassForge" target="_blank" rel="noopener">→ View repository on GitHub</a>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-id">CASE-003 · SECURE CODING REVIEW</span>
+        <span class="case-status">RESOLVED</span>
+      </div>
+      <h3>Secure Coding Review — CodeAlpha Internship</h3>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">Bandit</span><span class="tag">SAST</span><span class="tag">SQLi Prevention</span>
+      </div>
+      <ul>
+        <li>Reviewed a vulnerable Python backend script and produced a fully refactored, secure version.</li>
+        <li>Fixed hardcoded credentials by loading secrets through environment variables instead of source code.</li>
+        <li>Eliminated a SQL injection risk by replacing string-built queries with parameterized queries.</li>
+        <li>Replaced raw error output with internal logging and generic user-facing error screens to prevent information disclosure.</li>
+        <li>Used Bandit (Python static application security testing) to validate the fixes.</li>
+      </ul>
+      <a href="https://github.com/gokulkrishnar16/CodeAlpha_Secure_Coding_Review" target="_blank" rel="noopener">→ View repository on GitHub</a>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-id">CASE-004 · PHISHING AWARENESS TRAINING</span>
+        <span class="case-status">RESOLVED</span>
+      </div>
+      <h3>Phishing Awareness Training — CodeAlpha Internship</h3>
+      <div class="tags">
+        <span class="tag">Security Awareness</span><span class="tag">Social Engineering</span><span class="tag">PowerPoint</span>
+      </div>
+      <ul>
+        <li>Built a training presentation covering the phishing attack lifecycle and how to recognize it.</li>
+        <li>Explained email phishing, smishing, vishing, and spear phishing, with real-world examples.</li>
+        <li>Covered how to spot phishing emails and fake websites, plus prevention and response steps.</li>
+        <li>Included an interactive quiz to reinforce the material.</li>
+      </ul>
+      <a href="https://github.com/gokulkrishnar16/CodeAlapha_Phishing_Awareness_Training" target="_blank" rel="noopener">→ View repository on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="eyebrow">detected capabilities</div>
+  <h2>Skills &amp; Tools</h2>
+  <div class="skill-grid">
+    <div class="skill-card panel">
+      <h3>Security &amp; Networking</h3>
+      <div class="tags">
+        <span class="tag">Vulnerability Assessment</span>
+        <span class="tag">Recon &amp; Scanning</span>
+        <span class="tag">Web App Security Testing</span>
+        <span class="tag">Password Security Testing</span>
+        <span class="tag">SIEM Monitoring</span>
+        <span class="tag">CTF Challenges</span>
+        <span class="tag">Auth &amp; Access Control</span>
+      </div>
+    </div>
+    <div class="skill-card panel">
+      <h3>Tools</h3>
+      <div class="tags">
+        <span class="tag">Nmap</span><span class="tag">Burp Suite</span><span class="tag">Metasploit</span>
+        <span class="tag">Hydra</span><span class="tag">John the Ripper</span><span class="tag">Wireshark</span><span class="tag">Wazuh</span>
+      </div>
+    </div>
+    <div class="skill-card panel">
+      <h3>Operating Systems</h3>
+      <div class="tags">
+        <span class="tag">Kali Linux</span><span class="tag">Ubuntu</span><span class="tag">Windows</span>
+      </div>
+    </div>
+    <div class="skill-card panel">
+      <h3>Soft Skills</h3>
+      <div class="tags">
+        <span class="tag">Analytical Thinking</span><span class="tag">Attention to Detail</span>
+        <span class="tag">Team Collaboration</span><span class="tag">Problem Solving</span><span class="tag">Time Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="eyebrow">flagged events</div>
+  <h2>Achievements &amp; Training</h2>
+  <div class="panel">
+    <ul class="ach-list">
+      <li>Completed Pre Security Learning Path on TryHackMe.</li>
+      <li>Attended "Think Like A Hacker" webinar — Offenso Hackers Academy.</li>
+      <li>Attended "Steganography vs Cryptography — The Battle of Secret Keepers" webinar — Offenso Hackers Academy.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">open channel</div>
+  <h2>Contact</h2>
+  <div class="panel contact-panel">
+    <p class="summary-text" style="margin:0 auto;">Based in Aluva, Kochi, Kerala, India. Open to SOC Analyst / Cybersecurity roles and collaboration.</p>
+    <div class="contact-links">
+      <a class="btn primary" href="mailto:gokulkrishnar20011@outlook.com">Email me</a>
+      <a class="btn" href="https://www.linkedin.com/in/gokulkrishnar16/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/gokulkrishnar16" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  GOKUL KRISHNA R // BUILT WITH PYTHON-ADJACENT STUBBORNNESS AND HTML // <span id="year"></span>
+</footer>
+
+<button class="scrolltop" id="scrollTop" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  // live clock
+  function tick(){
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', {hour12:false});
+  }
+  tick(); setInterval(tick, 1000);
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // typewriter hero
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lines = [
+    {type:'cmd', text:'whoami'},
+    {type:'out', text:'GOKUL KRISHNA R', cls:'name'},
+    {type:'cmd', text:'role --current'},
+    {type:'out', text:'SOC Analyst / Cybersecurity Professional'},
+    {type:'cmd', text:'location'},
+    {type:'out', text:'Aluva, Kochi, Kerala, India'},
+    {type:'cmd', text:'status --check'},
+    {type:'out', text:'Actively scanning for opportunities...'}
+  ];
+  const body = document.getElementById('termBody');
+
+  function render(){
+    body.innerHTML = '';
+    lines.forEach(l=>{
+      const div = document.createElement('div');
+      div.className = 'line';
+      if(l.type==='cmd'){
+        div.classList.add('prompt');
+        div.textContent = l.text;
+      } else {
+        div.classList.add('out');
+        if(l.cls) div.classList.add(l.cls);
+        div.textContent = l.text;
+      }
+      body.appendChild(div);
+    });
+    const c = document.createElement('span');
+    c.className='cursor';
+    body.appendChild(c);
+  }
+
+  if(reduced){
+    render();
+  } else {
+    body.innerHTML = '';
+    let i = 0;
+    function step(){
+      if(i >= lines.length){ 
+        const c = document.createElement('span'); c.className='cursor'; body.appendChild(c);
+        return;
+      }
+      const l = lines[i];
+      const div = document.createElement('div');
+      div.className = 'line ' + (l.type==='cmd' ? 'prompt' : 'out' + (l.cls ? ' '+l.cls : ''));
+      div.textContent = l.text;
+      div.style.animationDelay='0s';
+      body.appendChild(div);
+      i++;
+      setTimeout(step, l.type==='cmd' ? 180 : 320);
+    }
+    step();
+  }
+
+  // scroll to top
+  const stBtn = document.getElementById('scrollTop');
+  function toggleScrollTop(){
+    stBtn.classList.toggle('show', window.scrollY > 400);
+  }
+  window.addEventListener('scroll', toggleScrollTop, {passive:true});
+  toggleScrollTop();
+  stBtn.addEventListener('click', ()=>{
+    window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'});
+  });
+</script>
+
+</body>
+</html>
